@@ -7,7 +7,9 @@
         <p>{{'client id: ' + clientId}}</p>
         <p>{{'api key: ' + apiKey}}</p>
         <p>{{'is logined: ' + isLogined }}</p>
+        <p>{{'data: ' + JSON.stringify(data)}}</p>
         <button @click="clientInitialize">login</button>
+        <button @click="fetchSpreadSheetData">fetch</button>
     </div>
 </template>
 
@@ -20,6 +22,7 @@ export default {
             apiKey: process.env.VUE_APP_API_KEY,
             sheetId: process.env.VUE_APP_SHEET_ID,
             isLogined: false,
+            data: [],
         };
     },
     mounted: function() {
@@ -52,11 +55,13 @@ export default {
 
         fetchSpreadSheetData() {
             // シートデータの取得
+            const self = this
             window.gapi.client.sheets.spreadsheets.values.get({
-                spreadsheetId: self.sheetId,
+                spreadsheetId: this.sheetId,
                 range: 'time-keeper!A1:F13'
             }).then((res)=>{
-                console.log(res)
+                this.data = res.result.values;
+                console.log(this.data)
             });
         }
     }
