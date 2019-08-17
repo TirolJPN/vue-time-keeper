@@ -1,15 +1,15 @@
 <template>
     <div>
-        <header class="site-header">
-            <nav class="gnav">
-                <ul class="gnav__menu">
-                    <li class="gnav__menu__item"><a href="">About</a></li>
-                    <li class="gnav__menu__item"><a href="">Works</a></li>
-                    <li class="gnav__menu__item"><a href="">Recruit</a></li>
-                    <li class="gnav__menu__item"><a href="">News</a></li>
+        <header class="time-keeper-header">
+            <nav class="time-keeper-nav">
+                <ul class="time-keeper-nav__menu">
+                    <li class="time-keeper-nav__menu__item"><a href="">About</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">Works</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">Recruit</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">News</a></li>
                 </ul>
             </nav>
-            <h1 class="site-logo">WEBDESIGNDAY</h1>
+            <h1 class="site-logo">Vue Time Keeper</h1>
         </header>
         <div class="time-keeper-container">
             <div class="time-keeper">
@@ -32,7 +32,8 @@ export default {
 </script>
 
 <style>
-.site-header{
+/* for header */
+.time-keeper-header{
     background: #fff;
     display: flex;
     /* padding: 20px 20px; */
@@ -41,6 +42,7 @@ export default {
     justify-content: space-between;
     width: 100%;
 
+    /* 子要素を全て縦中央に並べる */
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -48,30 +50,29 @@ export default {
 .gnav__menu {
     display: flex;
 }
-
-nav ul {
+.time-keeper-nav ul {
     list-style: none;
     padding-right:100px;
 }
 .site-logo{
     width: auto;
+    font-family: 'Pacifico', cursive;
     padding-right:50px;
 }
-.gnav__menu{
+.time-keeper-nav__menu{
     display: flex;
 }
-.gnav__menu__item{
+.time-keeper-nav__menu__item{
     margin-left: 20px;
 }
-.gnav__menu__item a{
+.time-keeper-nav__menu__item a{
     color: #333;
     font-size: 20px;
     text-decoration: none;
 }
 
 
-
-
+/* タイムキーパー本体 */
 .time-keeper-container{
     width: 100vw;
     height: auto;
@@ -113,5 +114,6 @@ nav ul {
 .msg {
     color: #fff;
     font-size: 80px;
+    font-family: 'Pacifico', cursive;
 }
 </style>
