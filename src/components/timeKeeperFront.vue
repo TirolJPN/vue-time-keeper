@@ -3,17 +3,20 @@
         <header class="time-keeper-header">
             <nav class="time-keeper-nav">
                 <ul class="time-keeper-nav__menu">
-                    <li class="time-keeper-nav__menu__item"><a href="">About</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Works</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Recruit</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">News</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">Auto</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">Stop</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">Pause</a></li>
+                    <li class="time-keeper-nav__menu__item"><a href="">SignOut</a></li>
                 </ul>
             </nav>
             <h1 class="site-logo">Vue Time Keeper</h1>
         </header>
         <div class="time-keeper-container">
-            <div class="time-keeper">
-                <p class="msg">DEMO MESSAGE</p>
+            <div class="time-keeper-box">
+                <p class="current-time time-keeper-paragraph">00:00</p>
+                <p class="remaining-time time-keeper-paragraph">-00:00</p>
+                <p class="presentator time-keeper-paragraph">by hoge fuga</p>
+                <p class="title time-keeper-paragraph">Story about Vue.js</p>
             </div>
         </div>
     </div>
@@ -91,12 +94,7 @@ export default {
     -ms-flex-pack: center;
     justify-content: center;
 
-    /* 上下中央寄せ */
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
 }
-
 .time-keeper-container:before {
     content: '';
     position: absolute;
@@ -106,14 +104,51 @@ export default {
     bottom: 0;
     background-color: rgba(0,0,0,0.8); /*半透明のフィルターをかける*/
 }
-
-.time-keeper{
+.time-keeper-box{
     position:relative;
 }
-
-.msg {
+.time-keeper-paragraph {
     color: #fff;
     font-size: 80px;
     font-family: 'Pacifico', cursive;
+    white-space: nowrap;
+    position: absolute;
 }
+
+.current-time{
+    font-size: 600px;
+    top: 100%;
+    left: 50%;
+    transform: translateY(-100%) translateX(-50%);
+    -webkit-transform: translateY(-100%) translateX(-50%);
+    margin: auto;
+}
+
+.remaining-time{
+    font-size: 90px;
+    top: 10%;
+    left: 50%;
+    transform: translateY(-10%) translateX(-50%);
+    -webkit-transform: translateY(-10%) translateX(-50%);
+    margin: auto;
+}
+
+.title{
+    font-size: 60px;
+    top: 90%;
+    left: 100%;
+    transform: translateY(-90%) translateX(-100%);
+    -webkit-transform: translateY(-90%) translateX(-100%);
+    margin: auto;
+}
+
+.presentator{
+    font-size: 40px;
+    top: 90%;
+    left: -100%;
+    transform: translateY(-90%) translateX(100%);
+    -webkit-transform: translateY(-90%) translateX(100%);
+    margin: auto;
+}
+
 </style>
