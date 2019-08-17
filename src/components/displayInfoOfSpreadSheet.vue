@@ -8,7 +8,8 @@
         <p>{{'api key: ' + apiKey}}</p>
         <p>{{'is logined: ' + isLogined }}</p>
         <p>{{'data: ' + JSON.stringify(data)}}</p>
-        <button @click="clientInitialize">login</button>
+        <button @click="clientInitialize" v-if="!isLogined">login</button>
+        <button @click="logOut" v-if="isLogined">logout</button>
         <button @click="fetchSpreadSheetData">fetch</button>
     </div>
 </template>
@@ -44,13 +45,23 @@ export default {
                     // ref: https://developers.google.com/identity/sign-in/web/reference
                     const auth = window.gapi.auth2.getAuthInstance();
                     // ポップアップが閉じられると同時に状態を変更
-                    auth.signIn().then( function () {
-                        self.isLogined = auth.isSignedIn.get();
-                        console.log('is logined?: ' + self.isLogined)
-                    });
+                    auth.signIn().then( () => 
+                        self.isLogined = auth.isSignedIn.get()
+                    )
                 });
-    
             });
+        },
+
+        logOut () {
+            const self = this;
+            const auth = window.gapi.auth2.getAuthInstance();
+            // 既にログイン状態ならば
+            if(auth.isSignedIn.get()){
+                auth.signOut().then( function() {
+                    auth.disconnect();
+                    self.isLogined = auth.isSignedIn.get();
+                })
+            }
         },
 
         fetchSpreadSheetData() {
