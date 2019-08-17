@@ -1,7 +1,20 @@
 <template>
-    <div class="time-keeper-container">
-        <div class="time-keeper">
-            <p class="msg">DEMO MESSAGE</p>
+    <div>
+        <header class="site-header">
+            <nav class="gnav">
+                <ul class="gnav__menu">
+                    <li class="gnav__menu__item"><a href="">About</a></li>
+                    <li class="gnav__menu__item"><a href="">Works</a></li>
+                    <li class="gnav__menu__item"><a href="">Recruit</a></li>
+                    <li class="gnav__menu__item"><a href="">News</a></li>
+                </ul>
+            </nav>
+            <h1 class="site-logo">WEBDESIGNDAY</h1>
+        </header>
+        <div class="time-keeper-container">
+            <div class="time-keeper">
+                <p class="msg">DEMO MESSAGE</p>
+            </div>
         </div>
     </div>
 </template>
@@ -11,7 +24,6 @@ export default {
     name: 'timeKeeperFront',
     data () {
         return {
-            
         };
     },
     methods: {
@@ -20,6 +32,46 @@ export default {
 </script>
 
 <style>
+.site-header{
+    background: #fff;
+    display: flex;
+    /* padding: 20px 20px; */
+    position: fixed;
+    z-index:1000;
+    justify-content: space-between;
+    width: 100%;
+
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.gnav__menu {
+    display: flex;
+}
+
+nav ul {
+    list-style: none;
+    padding-right:100px;
+}
+.site-logo{
+    width: auto;
+    padding-right:50px;
+}
+.gnav__menu{
+    display: flex;
+}
+.gnav__menu__item{
+    margin-left: 20px;
+}
+.gnav__menu__item a{
+    color: #333;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+
+
+
 .time-keeper-container{
     width: 100vw;
     height: auto;
