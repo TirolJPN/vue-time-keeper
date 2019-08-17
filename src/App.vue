@@ -1,19 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <displayInfoOfSpreadSheet />
+    <displayInfoOfSpreadSheet  v-if="!timeKeeperFlag" />
+    <timeKeeperFront v-if="timeKeeperFlag" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 import displayInfoOfSpreadSheet from './components/displayInfoOfSpreadSheet'
+import timeKeeperFront from './components/timeKeeperFront'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      // for debug
+      timeKeeperFlag:true,
+    }
+  },
   components: {
-    HelloWorld,
-    displayInfoOfSpreadSheet
+    displayInfoOfSpreadSheet,
+    timeKeeperFront
   }
 }
 </script>
@@ -25,6 +31,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+body {
+  margin: 0px;
 }
 </style>
