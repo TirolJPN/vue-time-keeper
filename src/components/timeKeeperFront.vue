@@ -4,7 +4,7 @@
             <nav class="time-keeper-nav">
                 <ul class="time-keeper-nav__menu">
                     <li class="time-keeper-nav__menu__item"><a href="">Auto</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Stop</a></li>
+                    <li class="time-keeper-nav__menu__item"><a @click="startTimer">Start</a></li>
                     <li class="time-keeper-nav__menu__item"><a href="">Pause</a></li>
                     <li class="time-keeper-nav__menu__item"><a href="">SignOut</a></li>
                 </ul>
@@ -13,7 +13,7 @@
         </header>
         <div class="time-keeper-container">
             <div class="time-keeper-box">
-                <p class="current-time time-keeper-paragraph">00:00</p>
+                <p class="current-time time-keeper-paragraph">{{nowTime}}</p>
                 <p class="remaining-time time-keeper-paragraph">-00:00</p>
                 <p class="presentator time-keeper-paragraph">by hoge fuga</p>
                 <p class="title time-keeper-paragraph">Story about Vue.js</p>
@@ -27,9 +27,16 @@ export default {
     name: 'timeKeeperFront',
     data () {
         return {
+            nowTimeInner: new Date(),
+            nowTime: "",
         };
     },
     methods: {
+        startTimer() {
+            console.log('hoge');
+            this.nowTimeInner = new Date();
+            this.nowTime = Math.floor( (this.nowTimeInner.getTime() - new Date('2019/08/18 23:50:00')) / 1000 );
+        }
     }
 }
 </script>
@@ -55,7 +62,8 @@ export default {
 }
 .time-keeper-nav ul {
     list-style: none;
-    padding-right:100px;
+    padding:0px;
+    margin:0px;
 }
 .site-logo{
     width: auto;
@@ -66,7 +74,7 @@ export default {
     display: flex;
 }
 .time-keeper-nav__menu__item{
-    margin-left: 20px;
+    margin-left: 50px;
 }
 .time-keeper-nav__menu__item a{
     color: #333;
@@ -117,10 +125,10 @@ export default {
 
 .current-time{
     font-size: 600px;
-    top: 100%;
+    top: 90%;
     left: 50%;
-    transform: translateY(-100%) translateX(-50%);
-    -webkit-transform: translateY(-100%) translateX(-50%);
+    transform: translateY(-90%) translateX(-50%);
+    -webkit-transform: translateY(-90%) translateX(-50%);
     margin: auto;
 }
 
@@ -150,5 +158,4 @@ export default {
     -webkit-transform: translateY(-90%) translateX(100%);
     margin: auto;
 }
-
 </style>
