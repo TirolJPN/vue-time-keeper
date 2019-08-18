@@ -13,7 +13,7 @@
         </header>
         <div class="time-keeper-container">
             <div class="time-keeper-box">
-                <p class="current-time time-keeper-paragraph">{{nowTime}}</p>
+                <p class="current-time time-keeper-paragraph">{{ nowTime }}</p>
                 <p class="remaining-time time-keeper-paragraph">-00:00</p>
                 <p class="presentator time-keeper-paragraph">by hoge fuga</p>
                 <p class="title time-keeper-paragraph">Story about Vue.js</p>
@@ -27,15 +27,29 @@ export default {
     name: 'timeKeeperFront',
     data () {
         return {
+            initTimeInner: new Date(),
             nowTimeInner: new Date(),
-            nowTime: "",
+            timerOn: false,
+            timerObject: null,
         };
     },
     methods: {
-        startTimer() {
-            console.log('hoge');
-            this.nowTimeInner = new Date();
-            this.nowTime = Math.floor( (this.nowTimeInner.getTime() - new Date('2019/08/18 23:50:00')) / 1000 );
+        startTimer () {
+            const self = this;
+            this.timerOn = true;
+            this.timerObj = setInterval(function() {self.count()}, 1000)
+        },
+        count () {
+            let newScound = new Date(this.nowTimeInner.getTime());
+            newScound.setSeconds(newScound.getSeconds() + 1);
+            this.nowTimeInner = newScound;
+            console.log(this.nowTimeInner);
+        }
+    },
+    computed: {
+        nowTime: function() {
+            // return Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
+            return this.nowTimeInner.getSeconds()
         }
     }
 }
