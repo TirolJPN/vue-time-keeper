@@ -5,7 +5,7 @@
                 <ul class="time-keeper-nav__menu">
                     <li class="time-keeper-nav__menu__item"><a href="">Auto</a></li>
                     <li class="time-keeper-nav__menu__item"><a @click="startTimer">Start</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Pause</a></li>
+                    <li class="time-keeper-nav__menu__item"><a @click="pauseTimer">Pause</a></li>
                     <li class="time-keeper-nav__menu__item"><a href="">SignOut</a></li>
                 </ul>
             </nav>
@@ -27,18 +27,25 @@ export default {
     name: 'timeKeeperFront',
     data () {
         return {
+            // タイマーが初期化された時間を格納するDataオブジェクト
             initTimeInner: new Date(),
+            // 現在の時間を格納するDataオブジェクト
             nowTimeInner: new Date(),
             timerOn: false,
             timerObject: null,
         };
     },
     methods: {
+        // 1秒ごとにnowTimeInnerのSecondsを更新するmethod
         startTimer () {
             const self = this;
             this.timerOn = true;
-            this.timerObj = setInterval(function() {self.count()}, 1000)
+            this.timerObject = setInterval(function() {self.count()}, 1000);
         },
+        pauseTimer () {
+            clearInterval(this.timerObject);
+        },
+        // nowTimeInnderのSecondsを一秒加算するmethod
         count () {
             let newScoundDate = new Date(this.nowTimeInner.getTime());
             newScoundDate.setSeconds(newScoundDate.getSeconds() + 1);
@@ -51,10 +58,6 @@ export default {
             // dataの各パラメータを参照して整形する
             const seconds = Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
             return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
-
-            // const time_str = ('00' +  this.nowTimeInner.getMinutes() - this.initTimeInner.getMinutes() ).slice(-2) + ':'
-			// 		+ ('00' +  this.nowTimeInner.getSeconds() - this.initTimeInner.getSeconds() ).slice(-2);
-            // return time_str;
         }
     }
 }
