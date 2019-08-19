@@ -40,16 +40,21 @@ export default {
             this.timerObj = setInterval(function() {self.count()}, 1000)
         },
         count () {
-            let newScound = new Date(this.nowTimeInner.getTime());
-            newScound.setSeconds(newScound.getSeconds() + 1);
-            this.nowTimeInner = newScound;
+            let newScoundDate = new Date(this.nowTimeInner.getTime());
+            newScoundDate.setSeconds(newScoundDate.getSeconds() + 1);
+            this.nowTimeInner = newScoundDate;
             console.log(this.nowTimeInner);
         }
     },
     computed: {
         nowTime: function() {
-            // return Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
-            return this.nowTimeInner.getSeconds()
+            // dataの各パラメータを参照して整形する
+            const seconds = Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
+            return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
+
+            // const time_str = ('00' +  this.nowTimeInner.getMinutes() - this.initTimeInner.getMinutes() ).slice(-2) + ':'
+			// 		+ ('00' +  this.nowTimeInner.getSeconds() - this.initTimeInner.getSeconds() ).slice(-2);
+            // return time_str;
         }
     }
 }
