@@ -14,9 +14,9 @@
         <div class="time-keeper-container">
             <div class="time-keeper-box">
                 <p class="current-time time-keeper-paragraph">{{ nowTime }}</p>
-                <p class="remaining-time time-keeper-paragraph">-00:00</p>
-                <p class="presentator time-keeper-paragraph">by hoge fuga</p>
-                <p class="title time-keeper-paragraph">Story about Vue.js</p>
+                <p class="remaining-time time-keeper-paragraph">{{ defferenceTime }}</p>
+                <p class="presentator time-keeper-paragraph">by {{presentator}}</p>
+                <p class="title time-keeper-paragraph">{{title}}</p>
             </div>
         </div>
     </div>
@@ -33,6 +33,10 @@ export default {
             nowTimeInner: new Date(),
             timerOn: false,
             timerObject: null,
+            presentator: 'hoge fuga',
+            title: 'Story about Vue.js',
+            // 発表時間が15分だと仮定
+            dummyPresentationSeconds: 900,
         };
     },
     methods: {
@@ -50,14 +54,18 @@ export default {
             let newScoundDate = new Date(this.nowTimeInner.getTime());
             newScoundDate.setSeconds(newScoundDate.getSeconds() + 1);
             this.nowTimeInner = newScoundDate;
-            console.log(this.nowTimeInner);
         }
     },
     computed: {
-        nowTime: function() {
+        nowTime: function () {
             // dataの各パラメータを参照して整形する
             const seconds = Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
             return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
+        },
+        defferenceTime: function () {
+            // dataの各パラメータを参照して整形する
+            const seconds = this.dummyPresentationSeconds - Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
+            return '-' + ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
         }
     }
 }
@@ -102,6 +110,7 @@ export default {
     color: #333;
     font-size: 20px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 
