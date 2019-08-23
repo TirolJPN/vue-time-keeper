@@ -4,8 +4,8 @@
             <nav class="time-keeper-nav">
                 <ul class="time-keeper-nav__menu">
                     <li class="time-keeper-nav__menu__item"><a href="">Auto</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Stop</a></li>
-                    <li class="time-keeper-nav__menu__item"><a href="">Pause</a></li>
+                    <li class="time-keeper-nav__menu__item"><a @click="startTimer">Start</a></li>
+                    <li class="time-keeper-nav__menu__item"><a @click="pauseTimer">Pause</a></li>
                     <li class="time-keeper-nav__menu__item"><a href="">SignOut</a></li>
                 </ul>
             </nav>
@@ -13,10 +13,10 @@
         </header>
         <div class="time-keeper-container">
             <div class="time-keeper-box">
-                <p class="current-time time-keeper-paragraph">00:00</p>
-                <p class="remaining-time time-keeper-paragraph">-00:00</p>
-                <p class="presentator time-keeper-paragraph">by hoge fuga</p>
-                <p class="title time-keeper-paragraph">Story about Vue.js</p>
+                <p class="current-time time-keeper-paragraph">{{ nowTime }}</p>
+                <p class="remaining-time time-keeper-paragraph">{{ defferenceTime }}</p>
+                <p class="presentator time-keeper-paragraph">by {{presentator}}</p>
+                <p class="title time-keeper-paragraph">{{title}}</p>
             </div>
         </div>
     </div>
@@ -27,9 +27,46 @@ export default {
     name: 'timeKeeperFront',
     data () {
         return {
+            // タイマーが初期化された時間を格納するDataオブジェクト
+            initTimeInner: new Date(),
+            // 現在の時間を格納するDataオブジェクト
+            nowTimeInner: new Date(),
+            timerOn: false,
+            timerObject: null,
+            presentator: 'hoge fuga',
+            title: 'Story about Vue.js',
+            // 発表時間が15分だと仮定
+            dummyPresentationSeconds: 900,
         };
     },
     methods: {
+        // 1秒ごとにnowTimeInnerのSecondsを更新するmethod
+        startTimer () {
+            const self = this;
+            this.timerOn = true;
+            this.timerObject = setInterval(function() {self.count()}, 1000);
+        },
+        pauseTimer () {
+            clearInterval(this.timerObject);
+        },
+        // nowTimeInnderのSecondsを一秒加算するmethod
+        count () {
+            let newScoundDate = new Date(this.nowTimeInner.getTime());
+            newScoundDate.setSeconds(newScoundDate.getSeconds() + 1);
+            this.nowTimeInner = newScoundDate;
+        }
+    },
+    computed: {
+        nowTime: function () {
+            // dataの各パラメータを参照して整形する
+            const seconds = Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
+            return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
+        },
+        defferenceTime: function () {
+            // dataの各パラメータを参照して整形する
+            const seconds = this.dummyPresentationSeconds - Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
+            return '-' + ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
+        }
     }
 }
 </script>
@@ -55,7 +92,8 @@ export default {
 }
 .time-keeper-nav ul {
     list-style: none;
-    padding-right:100px;
+    padding:0px;
+    margin:0px;
 }
 .site-logo{
     width: auto;
@@ -66,12 +104,13 @@ export default {
     display: flex;
 }
 .time-keeper-nav__menu__item{
-    margin-left: 20px;
+    margin-left: 50px;
 }
 .time-keeper-nav__menu__item a{
     color: #333;
     font-size: 20px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 
@@ -117,10 +156,10 @@ export default {
 
 .current-time{
     font-size: 600px;
-    top: 100%;
+    top: 90%;
     left: 50%;
-    transform: translateY(-100%) translateX(-50%);
-    -webkit-transform: translateY(-100%) translateX(-50%);
+    transform: translateY(-90%) translateX(-50%);
+    -webkit-transform: translateY(-90%) translateX(-50%);
     margin: auto;
 }
 
@@ -150,5 +189,4 @@ export default {
     -webkit-transform: translateY(-90%) translateX(100%);
     margin: auto;
 }
-
 </style>
