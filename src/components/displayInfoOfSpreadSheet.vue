@@ -26,17 +26,12 @@ export default {
             data: [],
         };
     },
-    mounted: function() {
-        // for debug
-        console.log(this.clientId)
-        console.log(this.apiKey)
-    },
     methods: {
         clientInitialize() {
             const self = this;
              window.gapi.load('client:auth2', ()=> {
                 // authの初期化
-                gapi.client.init({
+                window.gapi.client.init({
                     clientId: self.clientId,
                     scope: 'https://www.googleapis.com/auth/spreadsheets',
                     discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
@@ -66,13 +61,11 @@ export default {
 
         fetchSpreadSheetData() {
             // シートデータの取得
-            const self = this
             window.gapi.client.sheets.spreadsheets.values.get({
                 spreadsheetId: this.sheetId,
                 range: 'time-keeper!A1:F13'
             }).then((res)=>{
                 this.data = res.result.values;
-                console.log(this.data)
             });
         }
     }

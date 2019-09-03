@@ -33,6 +33,7 @@ export default {
             nowTimeInner: new Date(),
             timerOn: false,
             timerObject: null,
+            startFlag: false,
             presentator: 'hoge fuga',
             title: 'Story about Vue.js',
             // 発表時間が15分だと仮定
@@ -44,9 +45,13 @@ export default {
         startTimer () {
             const self = this;
             this.timerOn = true;
-            this.timerObject = setInterval(function() {self.count()}, 1000);
+            if (!this.startFlag) {
+                this.startFlag = true;
+                this.timerObject = setInterval(function() {self.count()}, 1000);
+            }
         },
         pauseTimer () {
+            this.startFlag = false;
             clearInterval(this.timerObject);
         },
         // nowTimeInnderのSecondsを一秒加算するmethod
@@ -66,7 +71,7 @@ export default {
             // dataの各パラメータを参照して整形する
             const seconds = this.dummyPresentationSeconds - Math.floor( (this.nowTimeInner.getTime() - this.initTimeInner.getTime()) /1000);
             return '-' + ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
-        }
+        },
     }
 }
 </script>

@@ -1,27 +1,19 @@
 <template>
   <div id="app">
-    <displayInfoOfSpreadSheet  v-if="!timeKeeperFlag" />
-    <timeKeeperFront v-if="timeKeeperFlag" />
+    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
   </div>
 </template>
 
-<script>
-import displayInfoOfSpreadSheet from './components/displayInfoOfSpreadSheet'
-import timeKeeperFront from './components/timeKeeperFront'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import HelloWorld from './components/HelloWorld.vue';
 
-export default {
-  name: 'app',
-  data () {
-    return {
-      // for debug
-      timeKeeperFlag:true,
-    }
-  },
+@Component({
   components: {
-    displayInfoOfSpreadSheet,
-    timeKeeperFront
-  }
-}
+    HelloWorld,
+  },
+})
+export default class App extends Vue {}
 </script>
 
 <style>
@@ -31,9 +23,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-body {
-  margin: 0px;
+  margin-top: 60px;
 }
 </style>
