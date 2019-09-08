@@ -28,7 +28,7 @@ export default class displayInfoOfSpreadSheet extends Vue {
     data: Array<Array<any>> = [];
 
     /** methods **/
-    clientInitialize() {
+    clientInitialize(): void {
         const self = this;
             (<any>window).gapi.load('client:auth2', ()=> {
             // authの初期化
@@ -48,7 +48,7 @@ export default class displayInfoOfSpreadSheet extends Vue {
         });
     }
 
-    logOut () {
+    logOut (): void {
         const self = this;
         const auth = (<any>window).gapi.auth2.getAuthInstance();
         // 既にログイン状態ならば
@@ -60,7 +60,7 @@ export default class displayInfoOfSpreadSheet extends Vue {
         }
     }
 
-    fetchSpreadSheetData() {
+    fetchSpreadSheetData(): void {
         // シートデータの取得
         (<any>window).gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId: this.sheetId,

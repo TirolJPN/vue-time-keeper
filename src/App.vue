@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <timeKeeperFront />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/displayInfoOfSpreadSheet.vue';
+import displayInfoOfSpreadSheet from './components/displayInfoOfSpreadSheet.vue';
+import timeKeeperFront from './components/timeKeeperFront.vue';
 
 @Component({
   components: {
-    HelloWorld,
+    displayInfoOfSpreadSheet,
+    timeKeeperFront
   },
 })
 export default class App extends Vue {}
