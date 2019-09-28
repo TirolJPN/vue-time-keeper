@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <timeKeeperFront />
+    <displayInfoOfSpreadSheet />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import displayInfoOfSpreadSheet from './components/displayInfoOfSpreadSheet.vue';
-import timeKeeperFront from './components/timeKeeperFront.vue';
+import timeKeeperFront from './components/TimeKeeperFront.vue';
 
 @Component({
   components: {

@@ -1,17 +1,20 @@
 <template>
-    <div>
-        <hr>
-        <h1>
-            title
-        </h1>
-        <p>{{'client id: ' + clientId}}</p>
-        <p>{{'api key: ' + apiKey}}</p>
-        <p>{{'is logined: ' + isLogined }}</p>
-        <p>{{'data: ' + JSON.stringify(data)}}</p>
-        <button @click="clientInitialize" v-if="!isLogined">login</button>
-        <button @click="logOut" v-if="isLogined">logout</button>
-        <button @click="fetchSpreadSheetData">fetch</button>
+  <div>
+    <h1>
+      {{ this.errorMsg }}
+    </h1>
+    
+    <div  v-if="isLogined">
+      <input v-model="sheetId" placeholder="sheet ID">
+      <input v-model="sheetName" placeholder="sheet name">
+
+      <button @click="logOut" v-if="isLogined">logout</button>
+      <button @click="fetchSpreadSheetData">fetch</button>
     </div>
+    <div  v-else>
+      <button @click="clientInitialize">login</button>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,9 +26,13 @@ export default class displayInfoOfSpreadSheet extends Vue {
     /** data **/
     clientId: string = process.env.VUE_APP_CLIENT_ID;
     apiKey: string = process.env.VUE_APP_API_KEY;
-    sheetId: string = process.env.VUE_APP_SHEET_ID;
     isLogined: boolean =  false;
     data: Array<Array<any>> = [];
+
+    /** model **/
+    sheetId: string = '';
+    sheetName: string = ''; 
+    errorMsg: string = '';
 
     /** methods **/
     clientInitialize(): void {
@@ -38,7 +45,7 @@ export default class displayInfoOfSpreadSheet extends Vue {
                 discoveryDocs: ['https://sheets.googleapis.com/$discovery/rest?version=v4']
             }).then(function () {
                 // GoogleAuthオブジェクトを取得
-                // ref: https://developers.google.com/identity/sign-in/web/reference
+                //   ref: https://developers.google.com/identity/sign-in/web/reference
                 const auth = (<any>window).gapi.auth2.getAuthInstance();
                 // ポップアップが閉じられると同時に状態を変更
                 auth.signIn().then( () => 
@@ -64,10 +71,13 @@ export default class displayInfoOfSpreadSheet extends Vue {
         // シートデータの取得
         (<any>window).gapi.client.sheets.spreadsheets.values.get({
             spreadsheetId: this.sheetId,
-            range: 'time-keeper!A1:F13'
+            range: this.sheetName + '!A1:C100',
         }).then((res: any)=>{
             this.data = res.result.values;
-        });
+            this.errorMsg = 'スプレッドシートを読み取れました'
+        }, (reason: any) => {
+            this.errorMsg = 'スプレッドシートを読み取れません'
+        }) 
     }
 }
 </script>
