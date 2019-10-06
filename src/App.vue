@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <displayInfoOfSpreadSheet />
+    <displayInfoOfSpreadSheet @fetch="fetchSpreadSheet" />
   </div>
 </template>
 
@@ -15,7 +15,11 @@ import timeKeeperFront from './components/TimeKeeperFront.vue';
     timeKeeperFront
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  fetchSpreadSheet () {
+    alert("hoge")
+  }
+}
 </script>
 
 <style>
