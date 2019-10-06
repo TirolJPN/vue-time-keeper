@@ -5,7 +5,7 @@
       @logout="logout"
       v-bind:spreadSheet="this.spreadSheetRows"
     />
-    <displayInfoOfSpreadSheet
+    <Auth
       v-else
       @fetch="fetchSpreadSheet" />
   </div>
@@ -13,13 +13,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import displayInfoOfSpreadSheet from './components/displayInfoOfSpreadSheet.vue';
+import Auth from './components/Auth.vue';
 import TimeKeeper from './components/TimeKeeper.vue';
 import AutoTimeKeeper from './components/AutoTimeKeeper.vue';
 
 @Component({
   components: {
-    displayInfoOfSpreadSheet,
+    Auth,
     TimeKeeper,
     AutoTimeKeeper
   },

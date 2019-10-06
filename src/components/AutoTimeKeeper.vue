@@ -112,7 +112,6 @@ export default class timeKeeperFront extends Vue {
   }
 
   logout (): void {
-    console.log('hoge')
     this.$emit('logout')
   }
 
