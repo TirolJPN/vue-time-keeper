@@ -27,7 +27,7 @@ export default class displayInfoOfSpreadSheet extends Vue {
   clientId: string = process.env.VUE_APP_CLIENT_ID;
   apiKey: string = process.env.VUE_APP_API_KEY;
   isLogined: boolean =  false;
-  spreahsheetRows: Array<Array<any>> = [];
+  spreadsheetRows: Array<Array<any>> = [];
 
   /** model **/
   sheetId: string = '';
@@ -73,12 +73,12 @@ export default class displayInfoOfSpreadSheet extends Vue {
       spreadsheetId: this.sheetId,
       range: this.sheetName + '!A1:C100',
     }).then((res: any)=>{
-      this.spreahsheetRows = res.result.values;
+      this.spreadsheetRows = res.result.values;
       this.errorMsg = 'OK'
 
       // FIXME:
       // スプレッドシートの情報をAppにemit
-      this.$emit('fetch')
+      this.$emit('fetch', this.spreadsheetRows)
       // 自動再生のロジックはTimeKeeperに書く
     }, (reason: any) => {
       this.errorMsg = 'スプレッドシートを読み取れません'
