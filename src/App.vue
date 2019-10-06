@@ -2,6 +2,7 @@
   <div id="app">
     <AutoTimeKeeper
       v-if="isLogined"
+      @logout="logout"
       v-bind:spreadSheet="this.spreadSheetRows"
     />
     <displayInfoOfSpreadSheet
@@ -32,6 +33,11 @@ export default class App extends Vue {
   fetchSpreadSheet (rows: Array<Array<any>>) {
     this.isLogined = true;
     this.spreadSheetRows = Object.assign({}, rows);
+  }
+
+  logout () {
+    this.isLogined = false;
+    this.spreadSheetRows = [];
   }
 }
 </script>

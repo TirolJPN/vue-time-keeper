@@ -6,7 +6,7 @@
           <!-- <li class="time-keeper-nav__menu__item"><a href="">Auto</a></li>
           <li class="time-keeper-nav__menu__item"><a @click="startTimer">Start</a></li>
           <li class="time-keeper-nav__menu__item"><a @click="pauseTimer">Pause</a></li> -->
-          <li class="time-keeper-nav__menu__item"><a href="">SignOut</a></li>
+          <li class="time-keeper-nav__menu__item"><button v-on:click="logout">LogOut</button></li>
         </ul>
       </nav>
       <h1 class="site-logo">Vue Time Keeper</h1>
@@ -14,7 +14,7 @@
     <div class="time-keeper-container">
       <div class="time-keeper-box">
         <p class="current-time time-keeper-paragraph">{{ nowTime }}</p>
-        <p class="remaining-time time-keeper-paragraph">{{  }}</p>
+        <p class="remaining-time time-keeper-paragraph">{{'- ' + restTime }}</p>
         <p class="presentator time-keeper-paragraph">by {{ presentator }}</p>
         <p class="title time-keeper-paragraph">{{ presentator }}</p>
       </div>
@@ -36,9 +36,7 @@ export default class timeKeeperFront extends Vue {
   finishTimeInner: Date = new Date();
   // 現在の時間を格納するDataオブジェクト
   nowTimeInner: Date =  new Date();
-  timerOn: boolean = false;
   timerObject: number = 0;
-  startFlag: boolean = false;
   presentator: string = 'hoge fuga';
   title: string =  'Story about Vue.js';
   // 発表時間が15分だと仮定
@@ -89,13 +87,17 @@ export default class timeKeeperFront extends Vue {
 
   setTimer () {
     const self = this;
+
+    this.presentator = this.spreadSheet[this.sessionIndex][1];
+    this.title = this.spreadSheet[this.sessionIndex][2];
+
     // 現在進行中のSessionの開始時間と終了時間を求める
     const tmpDate = new Date();
     const todayDateString = tmpDate.getFullYear() + "/" + ("00" + (tmpDate.getMonth()+1)).slice(-2) + "/" + ("00" + tmpDate.getDate()).slice(-2);
     this.startTimeInner = new Date(todayDateString + " " + this.spreadSheet[this.sessionIndex][0] + ":00")
-    alert(todayDateString + " " + this.spreadSheet[this.sessionIndex][0] + ":00")
     this.finishTimeInner = new Date(todayDateString + " " + this.spreadSheet[this.sessionIndex + 1][0] + ":00")
     this.timerObject = setInterval(function() {self.count()}, 1000);
+    this.sessionIndex += 1;
   }
 
   // nowTimeInnderのSecondsを一秒加算するmethod
@@ -103,6 +105,15 @@ export default class timeKeeperFront extends Vue {
     let newScoundDate = new Date(this.nowTimeInner.getTime());
     newScoundDate.setSeconds(newScoundDate.getSeconds() + 1);
     this.nowTimeInner = newScoundDate;
+    if( Math.floor( (this.finishTimeInner.getTime() - this.nowTimeInner.getTime()) /1000) === 0 ){
+      clearInterval(this.timerObject);
+      this.setTimer();
+    }
+  }
+
+  logout (): void {
+    console.log('hoge')
+    this.$emit('logout')
   }
 
   /** computed */
@@ -111,10 +122,23 @@ export default class timeKeeperFront extends Vue {
     const seconds = Math.floor( (this.nowTimeInner.getTime() - this.startTimeInner.getTime()) /1000);
     return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
   }
+
+  get restTime(): string {
+    const seconds = Math.floor( (this.finishTimeInner.getTime() - this.nowTimeInner.getTime()) /1000);
+    return ( '00' + Math.floor(seconds / 60) ).slice(-2) + ':' + ( '00' + seconds % 60).slice(-2);
+  }
 }
 </script>
 
 <style>
+button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 0;
+    appearance: none;
+}
 /* for header */
 .time-keeper-header{
     background: #fff;
@@ -149,7 +173,7 @@ export default class timeKeeperFront extends Vue {
 .time-keeper-nav__menu__item{
     margin-left: 50px;
 }
-.time-keeper-nav__menu__item a{
+.time-keeper-nav__menu__item button{
     color: #333;
     font-size: 20px;
     text-decoration: none;

@@ -34,6 +34,18 @@ export default class displayInfoOfSpreadSheet extends Vue {
   sheetName: string = ''; 
   errorMsg: string = '';
 
+  mounted () {
+    const self = this;
+    const auth = (<any>window).gapi.auth2.getAuthInstance();
+    // 既にログイン状態ならば
+    if(auth.isSignedIn.get()){
+      auth.signOut().then( function() {
+        auth.disconnect();
+        self.isLogined = auth.isSignedIn.get();
+      })
+    }
+  }
+
   /** methods **/
   clientInitialize(): void {
     const self = this;
