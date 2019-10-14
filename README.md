@@ -1,29 +1,12 @@
 # vue-time-keeper
 
-## Project setup
-```
-npm install
-```
+## このプロジェクトについて
+タイムテーブル情報を格納したGoogle スプレッドシートと連携することで、
+自動でタイムキーパーを起動させます。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+スプレッドシートは決まった列に決まった情報を格納する必要があります。
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## デモ
+[スプレッドシート](https://docs.google.com/spreadsheets/d/1e--cQiRYn9Hc3kUj-kYIN7tKpqtWIh1tHURuNk3G1IY/edit?usp=sharing)
 
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[デモページ](https://vue-time-keeper.netlify.com/)
